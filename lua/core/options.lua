@@ -1,7 +1,3 @@
--- leader
-vim.g.mapleader = ' '
-vim.g.maplocalleader = ' '
-
 local opt = vim.opt
 
 -- line numbers 
@@ -23,3 +19,4 @@ opt.clipboard:append("unnamedplus")
 opt.splitright = true
 opt.splitbelow = true
 
+opt.wrap = false
