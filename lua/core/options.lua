@@ -20,3 +20,6 @@ opt.splitright = true
 opt.splitbelow = true
 
 opt.wrap = false
+
+-- backspace
+opt.backspace = "indent,eol,start"
