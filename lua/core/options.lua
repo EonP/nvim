@@ -1,10 +1,25 @@
-local opt = vim.opt
-
-vim.cmd("set expandtab")
-vim.cmd("set tabstop=2")
-vim.cmd("set softtabstop=2")
-vim.cmd("set shiftwidth=2")
-
+-- leader
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
+
+local opt = vim.opt
+
+-- line numbers 
+opt.relativenumber = true
+opt.number = true
+
+-- tabs & indentation
+opt.tabstop = 2 
+opt.shiftwidth = 2
+opt.expandtab = true
+opt.autoindent = true
+
+opt.cursorline = true
+
+-- clipboard
+opt.clipboard:append("unnamedplus")
+
+-- split windows
+opt.splitright = true
+opt.splitbelow = true
 
