@@ -55,8 +55,25 @@ return {
             },
           },
         },
-      }, 
+      },
 
+      ruff = {},
+      pylsp = {
+        settings = {
+          pylsp = {
+            plugins = {
+              pyflakes = { enabled = false },
+              pycodestyle = { enabled = false },
+              autopep8 = { enabled = false },
+              yapf = { enabled = false },
+              mccabe = { enabled = false },
+              pylsp_mypy = { enabled = false },
+              pylsp_black = { enabled = false },
+              pylsp_isort = { enabled = false },
+            },
+          },
+        },
+      },
 
 
     }
@@ -66,7 +83,7 @@ return {
 
     require('mason').setup()
 
-    local ensure_installed = vim.tbl_keys(servers or {})    
+    local ensure_installed = vim.tbl_keys(servers or {})
     require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
     require('mason-lspconfig').setup {
