@@ -21,11 +21,12 @@ return {
             settings = {
                 Lua = {
                     diagnostics = {
-                        globals = { 'vim' }
+                        globals = { "vim" }, -- Recognize vim as a global
                     },
                 },
             },
         })
+
 
         -- Python 
         lspconfig.pyright.setup({
