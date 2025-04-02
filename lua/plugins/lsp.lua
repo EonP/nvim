@@ -1,99 +1,70 @@
 return {
-  'neovim/nvim-lspconfig', -- Actually configure LSP servers
-  dependencies = {
-    { 'williamboman/mason.nvim', config = true }, -- Download and manage LSPs
-    'williamboman/mason-lspconfig.nvim', -- Bridge mason with lspconfig
-    'WhoIsSethDaniel/mason-tool-installer.nvim', -- Install extra tools
-    { 'j-hui/fidget.nvim', opts = {} }, -- Display LSP progress info
-    -- 'hrsh7th/cmp-nvim-lsp', -- Enhance autocompletion
-  },
-  config = function()
+    "neovim/nvim-lspconfig", -- Actually configure LSP servers
+    dependencies = {
+        "williamboman/mason.nvim", -- Download and manage LSPs
+        "williamboman/mason-lspconfig.nvim", -- Bridge mason with lspconfig
+    },
+    config = function()
+        require("mason").setup()
+        require("mason-lspconfig").setup({
+            ensure_installed = { "lua_ls", "pyright"}
+        })
 
-    -- keymaps
-    vim.api.nvim_create_autocmd('LspAttach', {
-      callback = function(event)
+        local lspconfig = require("lspconfig")
+        -- local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
-        -- helper mapping function
-        local map = function(mode, keys, func, desc)
-          vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
-        end
+        ------------------------------------------------------------------
+        ------------------------- LSPs -----------------------------------
 
-        map('n', 'K', vim.lsp.buf.hover, 'Hover Documentation')
-        map('n', 'gd', vim.lsp.buf.definition, '[G]oto [D]efinition') -- <C-t> to go back
-        map({'n', 'v'}, '<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
-      end
-    })
-
-    -- Needed for completion support (using nvim-cmp)
-    -- local capabilities = vim.lsp.protocol.make_client_capabilities()
-    -- capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
-    local capabilities = vim.lsp.protocol.make_client_capabilities()
-
-
-    -- Enable language servers ---------------------------------------------
-    ------------------------------------------------------------------------
-
-    local servers = {
-
-      lua_ls = {
-        settings = {
-          Lua = {
-            completion = {
-              callSnippet = 'Replace',
+        -- Lua
+        lspconfig.lua_ls.setup({
+            settings = {
+                Lua = {
+                    diagnostics = {
+                        globals = { 'vim' }
+                    },
+                },
             },
-            runtime = { version = 'LuaJIT' },
-            workspace = {
-              checkThirdParty = false,
-              library = {
-                '${3rd}/luv/library',
-                unpack(vim.api.nvim_get_runtime_file('', true)),
-              },
+        })
+
+        -- Python 
+        lspconfig.pyright.setup({
+            -- capabilities = capabilities, -- Add LSP capabilities for autocompletion
+            settings = {
+                python = {
+                    analysis = {
+                        typeCheckingMode = "basic", -- Adjust type checking (basic/strict/none)
+                        autoSearchPaths = true,
+                        useLibraryCodeForTypes = true,
+                    },
+                },
             },
-            diagnostics = { disable = { 'missing-fields' } },
-            format = {
-              enable = false,
-            },
-          },
-        },
-      },
-
-      ruff = {},
-      pylsp = {
-        settings = {
-          pylsp = {
-            plugins = {
-              pyflakes = { enabled = false },
-              pycodestyle = { enabled = false },
-              autopep8 = { enabled = false },
-              yapf = { enabled = false },
-              mccabe = { enabled = false },
-              pylsp_mypy = { enabled = false },
-              pylsp_black = { enabled = false },
-              pylsp_isort = { enabled = false },
-            },
-          },
-        },
-      },
+        })
 
 
-    }
+        ------------------------------------------------------------------
+        ------------------------------------------------------------------
 
-    ------------------------------------------------------------------------
-    ------------------------------------------------------------------------
+        -- Keymaps
+        vim.api.nvim_create_autocmd('LspAttach', {
+            callback = function(event)
 
-    require('mason').setup()
+                -- helper mapping function
+                local map = function(mode, keys, func, desc)
+                    vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
+                end
 
-    local ensure_installed = vim.tbl_keys(servers or {})
-    require('mason-tool-installer').setup { ensure_installed = ensure_installed }
+                map('n', 'K', vim.lsp.buf.hover, 'Hover Documentation')
+                map('n', 'gd', vim.lsp.buf.definition, '[G]oto [D]efinition') -- <C-t> to go back
+                map({'n', 'v'}, '<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
+            end
+        })
 
-    require('mason-lspconfig').setup {
-      handlers = {
-        function(server_name)
-          local server = servers[server_name] or {}
-          server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
-          require('lspconfig')[server_name].setup(server)
-        end,
-      },
-    }
-  end,
+        -- Enable folding globally
+        vim.o.foldmethod = "expr"  -- Use expression-based folding
+        vim.o.foldexpr = "nvim_treesitter#foldexpr()"  -- Treesitter folding (requires nvim-treesitter)
+        vim.o.foldenable = true    -- Enable folding by default
+        vim.o.foldlevel = 99       -- Open all folds by default
+
+    end
 }
