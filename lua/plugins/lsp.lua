@@ -3,6 +3,7 @@ return {
     dependencies = {
         "williamboman/mason.nvim", -- Download and manage LSPs
         "williamboman/mason-lspconfig.nvim", -- Bridge mason with lspconfig
+        "hrsh7th/cmp-nvim-lsp",
     },
     config = function()
         require("mason").setup()
@@ -11,17 +12,28 @@ return {
         })
 
         local lspconfig = require("lspconfig")
-        -- local capabilities = require("cmp_nvim_lsp").default_capabilities()
+        local capabilities = require("cmp_nvim_lsp").default_capabilities() 
 
         ------------------------------------------------------------------
         ------------------------- LSPs -----------------------------------
 
         -- Lua
         lspconfig.lua_ls.setup({
+            capabilities = capabilities,
             settings = {
                 Lua = {
+                    runtime = {
+                        version = "LuaJIT",
+                    },
                     diagnostics = {
-                        globals = { "vim" }, -- Recognize vim as a global
+                        globals = { "vim" }, -- Recognize 'vim' as a global
+                    },
+                    workspace = {
+                        checkThirdParty = false,
+                        library = vim.api.nvim_get_runtime_file("", true),
+                    },
+                    completion = {
+                        callSnippet = "Replace",
                     },
                 },
             },
@@ -30,7 +42,7 @@ return {
 
         -- Python 
         lspconfig.pyright.setup({
-            -- capabilities = capabilities, -- Add LSP capabilities for autocompletion
+            capabilities = capabilities, -- Add LSP capabilities for autocompletion
             settings = {
                 python = {
                     analysis = {
