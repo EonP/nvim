@@ -16,5 +16,15 @@ vim.opt.rtp:prepend(lazypath)
 
 require("core.options")
 require("core.keymaps")
-require("lazy").setup("plugins")
-
+require("lazy").setup({
+    {import = "plugins.lsp"}, 
+    {import = "plugins.alpha"},
+    {import = "plugins.catppuccin"},
+    {import = "plugins.cmp"},
+    {import = "plugins.lazygit"},
+    {import = "plugins.lualine"},
+    {import = "plugins.noice"},
+    {import = "plugins.nvim-tree"},
+    {import = "plugins.telescope"},
+    {import = "plugins.treesitter"},
+})

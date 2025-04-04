@@ -19,6 +19,12 @@ return {
                 signature = {
                     enabled = false,
                 },
+                progress = {
+                    enabled = false,
+                },
+                message = {
+                    enabled = true,
+                },
             },
         })
 
