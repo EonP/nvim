@@ -29,5 +29,6 @@ require("lazy").setup({
     {import = "plugins.telescope"},
     {import = "plugins.treesitter"},
     {import = "plugins.gitsigns"},
-    {import = "plugins.latex"}
+    {import = "plugins.latex"},
+    {import = "plugins.copilot"},
 })
