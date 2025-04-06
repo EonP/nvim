@@ -30,5 +30,6 @@ require("lazy").setup({
     {import = "plugins.treesitter"},
     {import = "plugins.gitsigns"},
     {import = "plugins.latex"},
-    {import = "plugins.copilot"},
+    {import = "plugins.bufferline"},
+   -- {import = "plugins.copilot"},
 })
