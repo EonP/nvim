@@ -31,5 +31,6 @@ require("lazy").setup({
     {import = "plugins.gitsigns"},
     {import = "plugins.latex"},
     {import = "plugins.bufferline"},
+    {import = "plugins.markdown-preview"},
    -- {import = "plugins.copilot"},
 })
