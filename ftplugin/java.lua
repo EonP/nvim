@@ -5,7 +5,7 @@ local workspace_dir = vim.fn.stdpath("data") .. "/jdtls-workspace/" .. project_n
 vim.fn.mkdir(workspace_dir, "p")
 
 -- Use your full Oracle JDK 21 path
-local jdk_path = "/Library/Java/JavaVirtualMachines/jdk-21.jdk/Contents/Home"
+local jdk_path = os.getenv("JAVA_HOME") -- or "/Library/Java/JavaVirtualMachines/jdk-21.jdk/Contents/Home"
 
 -- Project root detection
 local root_dir = require("jdtls.setup").find_root({
