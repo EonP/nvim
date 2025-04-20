@@ -1,6 +1,6 @@
 # My Neovim Config
 
-This is just my personal Neovim config. Here’s a rough overview of the requirements and installation steps.
+This is my personal Neovim configuration, tailored to my workflow and preferences. It’s a work in progress, and I'm always exploring ways to improve it.
 
 ---
 
@@ -100,3 +100,6 @@ nvim
 
 - You can enable/disable features easily:
   - Just **comment or uncomment** the relevant `require("plugins/...")`
+
+### Contributing
+Any kind of contribution is more than welcome—whether it's fixing bugs, adding plugins, or even just opening issues with suggestions!
