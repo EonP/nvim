@@ -49,11 +49,20 @@ return {
                 },
             }
 
+            -- C/C++ (clangd)
+            local c_config = {
+                capabilities = capabilities,
+                cmd = { "clangd"},
+                filetypes = { "c", "cpp", "objc", "objcpp", "h" },
+                root_dir = lspconfig.util.root_pattern("compile_commands.json", ".git"),
+            }
+
             ------------------------------------------------------------------
             ------------------------- Setup Configs --------------------------
 
             lspconfig.lua_ls.setup(lua_config)
             lspconfig.pyright.setup(python_config)
+            lspconfig.clangd.setup(c_config)
 
             ------------------------------------------------------------------
             ------------------------------------------------------------------
