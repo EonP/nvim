@@ -50,11 +50,18 @@ return {
             }
 
             -- C/C++ (clangd)
-            local c_config = {
+            local clangd_config = {
                 capabilities = capabilities,
                 cmd = { "clangd"},
                 filetypes = { "c", "cpp", "objc", "objcpp", "h" },
                 root_dir = lspconfig.util.root_pattern("compile_commands.json", ".git"),
+            }
+
+            -- JavaScript / TypeScript
+            local tsserver_config = {
+                capabilities = capabilities,
+                filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
+                root_dir = lspconfig.util.root_pattern("package.json", "tsconfig.json", ".git"),
             }
 
             ------------------------------------------------------------------
@@ -62,7 +69,8 @@ return {
 
             lspconfig.lua_ls.setup(lua_config)
             lspconfig.pyright.setup(python_config)
-            lspconfig.clangd.setup(c_config)
+            lspconfig.clangd.setup(clangd_config)
+            lspconfig.ts_ls.setup(tsserver_config)
 
             ------------------------------------------------------------------
             ------------------------------------------------------------------

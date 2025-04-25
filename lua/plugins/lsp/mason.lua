@@ -26,7 +26,8 @@ return {
                 "lua_ls",
                 "pyright",
                 "jdtls",
-                "clangd"
+                "clangd",
+                "typescript-language-server"
             },
         })
     end,
