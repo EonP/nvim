@@ -76,7 +76,7 @@ cd ~/.config/
 
 2. Clone this repo: 
 ```bash
-https://github.com/EonP/nvim.git
+git clone https://github.com/EonP/nvim.git
 ```
 
 3. Launch Neovim - all plugins will install automatically 
