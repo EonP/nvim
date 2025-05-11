@@ -41,7 +41,6 @@ brew install git
 
 ```bash
 # Fonts (for icons)
-brew tap homebrew/cask-fonts
 brew install --cask font-hack-nerd-font
 ```
 
